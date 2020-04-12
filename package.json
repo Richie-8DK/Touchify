@@ -1,0 +1,22 @@
+{
+  "name": "touchify",
+  "version": "1.0.0",
+  "description": "Creates a local website to be opend on a tablet/smartphone, which translates touch to mouse movement on your PC.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "drawing",
+    "smartphone",
+    "tablet",
+    "touch",
+    "mouse",
+    "whiteboard",
+    "socket.io",
+    "express",
+    "graphic"
+  ],
+  "author": "Richard Wacker",
+  "license": "MIT"
+}
