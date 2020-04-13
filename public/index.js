@@ -6,6 +6,11 @@ let state = {
 }
 let drawing = false
 
+// no scroll
+
+'self.webView.scrollView.bounces = NO;' // no scroll-reload ios :|
+
+
 canvas.addEventListener('mousedown', onMouseDown, false)
 canvas.addEventListener('mouseup', onMouseUp, false)
 canvas.addEventListener('mouseout', onMouseUp, false)
@@ -16,7 +21,10 @@ canvas.addEventListener('touchstart', onMouseDown, false)
 canvas.addEventListener('touchend', onMouseUp, false)
 canvas.addEventListener('touchcancel', onMouseUp, false)
 canvas.addEventListener('touchmove', throttle(onMouseMove, 30), false)
-canvas.ontouchend = () => socket.emit('up')
+canvas.ontouchend = e => {
+  e.preventDefault()
+  socket.emit('up')
+}
 
 window.addEventListener('resize', onResize, false)
 onResize()

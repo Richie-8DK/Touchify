@@ -4,7 +4,8 @@
   "description": "Creates a local website to be opend on a tablet/smartphone, which translates touch to mouse movement on your PC.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron . --enable-transparent-visuals --disable-gpu"
   },
   "keywords": [
     "drawing",
@@ -18,5 +19,10 @@
     "graphic"
   ],
   "author": "Richard Wacker",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "robotjs": "^0.6.0",
+    "socket.io": "^2.3.0"
+  }
 }
