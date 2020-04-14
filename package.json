@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron . --enable-transparent-visuals --disable-gpu"
+    "start": "node ."
   },
   "keywords": [
     "drawing",
@@ -21,8 +21,10 @@
   "author": "Richard Wacker",
   "license": "MIT",
   "dependencies": {
+    "desktop-screenshot": "^0.1.1",
     "express": "^4.17.1",
     "robotjs": "^0.6.0",
+    "sharp": "^0.25.2",
     "socket.io": "^2.3.0"
   }
 }

@@ -23,14 +23,18 @@
     right: 0;
     bottom: 0;
     top: 0;
+    background-image: url('./area.png');
+    background-repeat: no-repeat;
   }
 
   .button {
-    position: absolute;
     height: 2em;
     border-radius: 999px;
-    left: 1em;
-    right: 0;
-    bottom: 0;
-    top: 1em;
+  }
+
+  .buttons {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 1em;
   }

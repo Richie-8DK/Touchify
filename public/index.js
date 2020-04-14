@@ -1,20 +1,24 @@
 const socket = io()
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext('2d')
+
 let state = {
   color: 'black'
 }
 let drawing = false
+let pos = {
+  x: 0,
+  y: 0
+}
 
-// no scroll
 
-'self.webView.scrollView.bounces = NO;' // no scroll-reload ios :|
+// self.webView.scrollView.bounces = NO; // no scroll-reload ios :|
 
 
 canvas.addEventListener('mousedown', onMouseDown, false)
 canvas.addEventListener('mouseup', onMouseUp, false)
 canvas.addEventListener('mouseout', onMouseUp, false)
-canvas.addEventListener('mousemove', throttle(onMouseMove, 100), false)
+canvas.addEventListener('mousemove', throttle(onMouseMove, 30), false)
 
 //Touch support for mobile devices
 canvas.addEventListener('touchstart', onMouseDown, false)
@@ -26,12 +30,12 @@ canvas.ontouchend = e => {
   socket.emit('up')
 }
 
-window.addEventListener('resize', onResize, false)
-onResize()
+window.addEventListener('resize', updateView, false)
+document.getElementById('fs').addEventListener('click', toggleFullscreen)
+document.getElementById('uv').addEventListener('click', updateView)
 
-// socket.on('drawing', onDrawingEvent)
-
-document.getElementsByClassName('button')[0].addEventListener('click', toggleFullscreen)
+socket.on('changeView', reloadimg)
+updateView()
 
 function toggleFullscreen() {
   if (document.fullscreen) {
@@ -39,6 +43,12 @@ function toggleFullscreen() {
   } else {
     document.getElementById('app').requestFullscreen()
   }
+}
+
+
+function reloadimg() {
+  console.log('hi')
+  canvas.style = "background-image: url('./area.jpeg?random="+ new Date().getTime() +"');"
 }
 
 function drawLine(x0, y0, x1, y1, color, emit) {
@@ -63,6 +73,7 @@ function drawLine(x0, y0, x1, y1, color, emit) {
 }
 
 function onMouseDown(e) {
+  e.preventDefault()
   drawing = true
   state.x = e.clientX || e.touches[0].clientX
   state.y = e.clientY || e.touches[0].clientY
@@ -72,6 +83,7 @@ function onMouseDown(e) {
 }
 
 function onMouseUp(e) {
+  e.preventDefault()
   if (!drawing) { return }
   drawing = false
   drawLine(state.x, state.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, state.color, true)
@@ -79,6 +91,7 @@ function onMouseUp(e) {
 }
 
 function onMouseMove(e) {
+  e.preventDefault()
   if (!drawing) { return }
   drawLine(state.x, state.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, state.color, true)
   state.x = e.clientX || e.touches[0].clientX
@@ -107,7 +120,13 @@ function throttle(callback, delay) {
 }
 
 
-function onResize() {
+function updateView() {
+  socket.emit('updateView', {
+    x: pos.x,
+    y: pos.y,
+    width: window.innerWidth,
+    height: window.innerHeight
+  })
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
 }
